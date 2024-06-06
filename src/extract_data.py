@@ -37,6 +37,24 @@ def get_complete_address(data):
 def get_reviews_link(data):
     return clean_link(safe_get(data, 6, 4, 3, 0))
 
+def get_description(data):
+    return safe_get(data, 6, 32, 1, 1)
+
+def get_properties(data):
+    try:
+        property_slot = remove_none(safe_get(data, 6, 100, 1))
+        properties_unstructured = [p[2][2] for k in property_slot for p in k[2]]
+        properties_unstructured = remove_none(properties_unstructured)
+        all_properties = [k[-1] for k in properties_unstructured]
+    except Exception as e:
+        print(f"Some error occurred extracting properties: {e}")
+        all_properties = []
+    return all_properties
+
+def remove_none(data):
+    return list(filter(lambda x: x is not None, data))
+
+
 def get_title(data):
     return safe_get(data, 6, 11)
 
@@ -217,16 +235,20 @@ def extract_data(input_str, link):
     address = get_address(data)
     website = get_website(data)
     main_category = get_main_category(data)
+    description = get_description(data)
+    properties = get_properties(data)
 
     user_reviews = get_user_reviews(data)
-    
+
     return {
         "place_id": place_id,
         "name": title,
         "reviews": reviews,
         "website": website,
+        "description": description,
         "main_category": main_category,
         "categories": categories,
+        "properties": properties,
         "rating": rating,
         "address": address,
         "link": link,

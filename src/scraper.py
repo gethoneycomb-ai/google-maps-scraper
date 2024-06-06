@@ -291,9 +291,9 @@ return get_sponsored_links()''')
                             sleep_time = 0.1
                             sleep(sleep_time)
     
-    search_link = create_search_link(data['query'], data['lang'], data['geo_coordinates'], data['zoom'])
-    
-    perform_visit(driver, search_link)
+    # search_link = create_search_link(data['query'], data['lang'], data['geo_coordinates'], data['zoom'])
+
+    perform_visit(driver, data['query'] + "&hl=" + data["lang"])
 
     if driver.is_in_page('/sorry/'):
         raise Exception("Detected by Google, Retrying ")
