@@ -20,7 +20,6 @@ setup(
     author=AUTHOR,
     author_email=AUTHOR_EMAIL,
     description=DESCRIPTION,
-    packages=find_packages(where="src", exclude=["tests*"]),  # Look for packages in src
-    package_dir={"": "src"},  # Root package directory is src
+    packages=find_packages(exclude=["tests*"]),  # Look for packages in src
     install_requires=requirements,  # Use requirements from requirements.txt
 )
