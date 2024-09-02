@@ -505,6 +505,12 @@ def get_address(data):
     return safe_get(data, 6, 39) or safe_get(data, 6, 37,0,0,17,0)
 
 
+def get_located_in(data):
+    located_in = safe_get(data, 6, 134, 0, 0, 0, 0)
+    print(f"Located in {located_in}")
+    return located_in
+
+
 def get_website(data):
     return clean_link(safe_get(data, 6, 7, 0))
 
@@ -759,7 +765,10 @@ def extract_data(input_str, link):
     popular_times = extract_popular_times(data)
     most_popular_times = extract_most_popular_times(popular_times)
     is_claimed = get_can_claim(data)
-    
+
+    located_in = get_located_in(data)
+
+
     # from botasaurus import bt
     # bt.write_temp_json(data)
     return {
@@ -783,6 +792,7 @@ def extract_data(input_str, link):
         "link": link,
         "status": status,
         "price_range": price_range,
+        "located_in": located_in,
         "reviews_per_rating": reviews_per_rating,
         "featured_question": first_question,
         "reviews_link": reviews_link,

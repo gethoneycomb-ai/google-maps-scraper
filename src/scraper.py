@@ -188,6 +188,7 @@ class StuckInGmapsException(Exception):
     close_on_crash=True,
     max_retry = 3,
     reuse_driver=True,
+    block_images_and_css=True,
     headless=True,
     output=None,
 )
